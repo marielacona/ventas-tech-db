@@ -10,10 +10,10 @@ USE VentasTechDB;
         PASO 1: Drop tables 
 ==============================*/
 
-DROP TABLE IF EXISTS ventas;
-DROP TABLE IF EXISTS productos;
-DROP TABLE IF EXISTS clientes;
-DROP TABLE IF EXISTS categorias;
+DROP TABLE IF EXISTS venta;
+DROP TABLE IF EXISTS producto;
+DROP TABLE IF EXISTS cliente;
+DROP TABLE IF EXISTS categoria;
 
 /* =============================
         PASO 2: Creo tablas 
@@ -23,11 +23,11 @@ DROP TABLE IF EXISTS categorias;
 CREATE TABLE Categoria(
  id_categoria INT PRIMARY KEY,
  nombre_categoria VARCHAR (50) NOT NULL,
- descripción VARCHAR (200)
+ descripcion VARCHAR (200)
  )
 
  -- Tabla Clientes
- CREATE TABLE Clientes (
+ CREATE TABLE Cliente (
   id_cliente INT PRIMARY KEY,
   nombre VARCHAR (100) NOT NULL, 
   email VARCHAR (100) UNIQUE, 
@@ -36,7 +36,7 @@ CREATE TABLE Categoria(
   )
 
   --Tabla Productos
-  CREATE TABLE Productos (
+  CREATE TABLE Producto (
   id_producto INT PRIMARY KEY, 
   nombre_producto VARCHAR (100) NOT NULL, 
  id_categoria INT,
@@ -48,12 +48,12 @@ FOREIGN KEY (id_categoria)
  ) 
 
   --Tabla ventas
-  CREATE TABLE Ventas (
+  CREATE TABLE Venta (
   id_venta INT PRIMARY KEY,
     id_cliente INT,
     id_producto INT,
-    FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente),
-    FOREIGN KEY (id_producto) REFERENCES Productos(id_producto),
+    FOREIGN KEY (id_cliente) REFERENCES Cliente(id_cliente),
+    FOREIGN KEY (id_producto) REFERENCES Producto(id_producto),
     cantidad	INT	NOT NULL,
 precio_unitario	DECIMAL(10,2)	NOT NULL,
 fecha_venta	DATE	NOT NULL
@@ -63,22 +63,22 @@ fecha_venta	DATE	NOT NULL
 ===============================*/
 
 --Inserto Categoría
-INSERT INTO Categoría (id_categoría,nombre_categoría,descripción) VALUES
-  (1, 'Computación',    'Laptops, PCs y monitores'),
-  (2, 'Accesorios',     'Periféricos y complementos'),
+INSERT INTO Categoria (id_categoria,nombre_categoria,descripcion) VALUES
+  (1, 'Computacion',    'Laptops, PCs y monitores'),
+  (2, 'Accesorio',     'Periféricos y complementos'),
   (3, 'Audio',          'Auriculares y parlantes'),
   (4, 'Almacenamiento', 'Discos y memorias');
 
---Inserto Clientes
-INSERT INTO Clientes (id_cliente,nombre,email,ciudad,fecha_registro) VALUES
+--Inserto Cliente
+INSERT INTO Cliente (id_cliente,nombre,email,ciudad,fecha_registro) VALUES
 (1, 'María López',  'maria@mail.com',  'Buenos Aires', '2024-01-05'),
   (2, 'Carlos Ruiz',  'carlos@mail.com', 'Córdoba',      '2024-01-10'),
   (3, 'Ana Gómez',    'ana@mail.com',    'Rosario',      '2024-02-01'),
   (4, 'Pedro Sanz',   'pedro@mail.com',  'Mendoza',      '2024-02-15'),
   (5, 'Laura Torres', 'laura@mail.com',  'Tucumán',      '2024-03-01');
 
---Inserto Productos
-INSERT INTO Productos (id_producto,nombre_producto,id_categoria,stock,activo) VALUES
+--Inserto Producto
+INSERT INTO Producto (id_producto,nombre_producto,id_categoria,precio,stock,activo) VALUES
   (1, 'Laptop Pro 15',      1, 1200.00, 15, 1),
   (2, 'Mouse Inalámbrico',  2,   28.00, 80, 1),
   (3, 'Monitor 4K 27',      1,  450.00, 12, 1),
@@ -86,8 +86,8 @@ INSERT INTO Productos (id_producto,nombre_producto,id_categoria,stock,activo) VA
   (5, 'SSD Externo 1TB',    4,  130.00, 18, 1),
   (6, 'Teclado Mecánico',   2,   95.00, 40, 1);
 
---Inserto Ventas
-INSERT INTO Ventas (id_venta,id_cliente,id_producto,cantidad,precio_unitario,fecha_venta) VALUES
+--Inserto Venta
+INSERT INTO Venta (id_venta,id_cliente,id_producto,cantidad,precio_unitario,fecha_venta) VALUES
   ( 1, 1, 1, 2, 1200.00, '2024-03-05'),
   ( 2, 2, 2, 5,   28.00, '2024-03-06'),
   ( 3, 3, 3, 1,  450.00, '2024-03-07'),
@@ -102,7 +102,7 @@ INSERT INTO Ventas (id_venta,id_cliente,id_producto,cantidad,precio_unitario,fec
   /* =============================
         PASO 4: Validación
 ===============================*/
-SELECT * FROM Categoría;   -- esperado: 4 filas
-SELECT * FROM Clientes;     -- esperado: 5 filas
-SELECT * FROM Productos;--esperado: 6 filas
-SELECT * FROM Ventas     -- esperado: 10 filas
+SELECT * FROM Categoria;   -- esperado: 4 filas
+SELECT * FROM Cliente;     -- esperado: 5 filas
+SELECT * FROM Producto;--esperado: 6 filas
+SELECT * FROM Venta     -- esperado: 10 filas
